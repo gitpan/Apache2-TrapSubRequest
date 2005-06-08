@@ -1,0 +1,14 @@
+Changes
+MANIFEST
+MANIFEST.SKIP
+META.yml
+Makefile.PL
+README
+lib/Apache2/TrapSubRequest.pm
+t/htdocs/subreq_output
+t/conf/extra.last.conf.in
+t/response/TestApache/trap_subrequest.pm
+t/pod.t
+t/pod-coverage.t
+t/00.load.t
+t/TEST.PL
