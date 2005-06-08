@@ -17,8 +17,8 @@ use APR::Brigade        ();
 
 use Carp                ();
 
-use Apache2::Const      -compile => qw(OK DECLINED HTTP_OK);
-use APR::Const          -compile => qw(:common);
+use Apache2::Const      -compile => qw(OK);
+#use APR::Const          -compile => qw(:common);
 
 =head1 NAME
 
@@ -26,11 +26,11 @@ Apache2::TrapSubRequest - Trap a lookup_file/lookup_uri into a scalar
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -45,13 +45,6 @@ our $VERSION = '0.02';
         # ...
         Apache2::OK;
     }
-
-=head1 WARNING
-
-This software requires that the Apache API function C<ap_save_brigade> be 
-exposed as C<Apache2::Filter::save_brigade> with the parameters 
-($f, $newbb, $bb, $pool). As of this writing (2005-02-11), this
-functionality is not present in the core mod_perl 2.x distribution.
 
 =head1 FUNCTIONS
 
@@ -88,7 +81,7 @@ dorian taylor, C<< <dorian@cpan.org> >>
 =head1 BUGS
 
 Please report any bugs or feature requests to
-C<bug-apache-trapsubrequest@rt.cpan.org>, or through the web interface at
+C<bug-apache2-trapsubrequest@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>.  I will be notified, and then you'll automatically
 be notified of progress on your bug as I make changes.
 
