@@ -26,11 +26,11 @@ Apache2::TrapSubRequest - Trap a lookup_file/lookup_uri into a scalar
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 SYNOPSIS
 
@@ -46,6 +46,13 @@ our $VERSION = '0.03';
         Apache2::OK;
     }
 
+=head1 DESCRIPTION
+
+L<Apache2::TrapSubRequest> is a mixin to L<Apache2::SubRequest> which
+enables you to collect the subrequest's response into a scalar
+reference. There is only one method, L</run_trapped>, which is
+demonstrated in the synopsis.
+
 =head1 FUNCTIONS
 
 =head2 run_trapped (\$data);
@@ -56,7 +63,7 @@ Run the output of a subrequest into a scalar reference.
 
 sub Apache2::SubRequest::run_trapped {
     my ($r, $dataref) = @_;
-    Carp::croak('Usage: $subr->run_trapped(\$data)') 
+    Carp::croak('Usage: $subr->run_trapped(\$data)')
         unless ref $dataref eq 'SCALAR';
     $$dataref = '' unless defined $$dataref;
     $r->pnotes(__PACKAGE__, $dataref);
@@ -70,13 +77,14 @@ sub _filter {
     my $r = $f->r;
     my $dataref = $r->pnotes(__PACKAGE__);
     $bb->flatten(my $string);
+    $bb->destroy;
     $$dataref .= $string;
     Apache2::Const::OK;
 }
 
 =head1 AUTHOR
 
-dorian taylor, C<< <dorian@cpan.org> >>
+Dorian Taylor, C<< <dorian@cpan.org> >>
 
 =head1 BUGS
 
@@ -85,14 +93,20 @@ C<bug-apache2-trapsubrequest@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>.  I will be notified, and then you'll automatically
 be notified of progress on your bug as I make changes.
 
-=head1 ACKNOWLEDGEMENTS
+=head1 LICENSE AND COPYRIGHT
 
-=head1 COPYRIGHT & LICENSE
+Copyright 2013 Dorian Taylor.
 
-Copyright 2005 dorian taylor, All Rights Reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you
+may not use this file except in compliance with the License. You may
+obtain a copy of the License at
+L<http://www.apache.org/licenses/LICENSE-2.0> .
 
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.  See the License for the specific language governing
+permissions and limitations under the License.
 
 =cut
 

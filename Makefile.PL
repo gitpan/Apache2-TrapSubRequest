@@ -1,23 +1,26 @@
 use strict;
-use warnings;
-use ExtUtils::MakeMaker;
+use inc::Module::Install;
 
-use Apache::TestMM  qw(test clean);
+name     'Apache2-TrapSubRequest';
+abstract 'Trap the result of a subrequest into a scalar.';
+all_from 'lib/Apache2/TrapSubRequest.pm';
+author   q{Dorian Taylor <dorian@cpan.org>};
+license  'apache';
+
+requires mod_perl2 => 1.999023;
+
+build_requires 'Test::More';
+build_requires 'Apache::Test';
+
+
+clean_files 't/TEST t/SMOKE';
+
+require Apache::TestMM;
+Apache::TestMM->import(qw(test clean));
 
 Apache::TestMM::filter_args();
 Apache::TestMM::generate_script('t/TEST');
 
-WriteMakefile(
-    NAME                => 'Apache2::TrapSubRequest',
-    AUTHOR              => 'dorian taylor <dorian@cpan.org>',
-    VERSION_FROM        => 'lib/Apache2/TrapSubRequest.pm',
-    ABSTRACT_FROM       => 'lib/Apache2/TrapSubRequest.pm',
-    PL_FILES            => {},
-    PREREQ_PM => {
-        'mod_perl2'     => 1.999023,
-        'Apache::Test'  => 1,
-        'Test::More'    => 0,
-    },
-    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Apache2-TrapSubRequest-* t/TEST' },
-);
+auto_install;
+
+WriteAll;
